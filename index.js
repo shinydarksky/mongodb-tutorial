@@ -7,7 +7,13 @@ app.use(express.static('public'))
 app.listen(port,()=>console.log(`()=>port ${port}`))
 // Express
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://thanhloc:Lelouch@cluster0.cbei7.gcp.mongodb.net/tutorial?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb+srv://thanhloc:CECwH6ipKW1jj8HC@cluster0.cbei7.gcp.mongodb.net/tutorial?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true},(err)=>{
+    if(!err){
+        console.log('connect to mongodb successed')
+    }else{
+        console.log('connect to mongodb failed')
+    }
+});
 // Mongoose
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -19,10 +25,4 @@ app.use(bodyParser.json())
 
 app.get("/",(req,res)=>{
     res.send('test')
-})
-app.get("/",(req,res)=>{
-    res.send('test')
-})
-app.get("/button",(req,res)=>{
-    res.render('button')
 })
