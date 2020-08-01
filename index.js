@@ -10,7 +10,7 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 // Body parser 
-let mongoose = require('mongoose');
+var mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://thanhloc:EVL6sfbDcNsuJ8fY@cluster0.cbei7.gcp.mongodb.net/tutorial?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true},(err)=>{
     if(!err){
         console.log('connect to mongodb successed')
@@ -19,9 +19,9 @@ mongoose.connect('mongodb+srv://thanhloc:EVL6sfbDcNsuJ8fY@cluster0.cbei7.gcp.mon
     }
 });
 
-const cap1s = require('./Models/cap1')
-const cap2s = require('./Models/cap2');
-const cap1 = require('./Models/cap1');
+var cap1s = require('./Models/cap1')
+var cap2s = require('./Models/cap2');
+var cap1 = require('./Models/cap1');
 // Mongoose pass EVL6sfbDcNsuJ8fY
 app.get("/",(req,res)=>{
     res.send('test')
@@ -58,4 +58,26 @@ app.get('/cap2/:idname/:name',(req,res)=>{
                 res.send("fail errMsg:"+err)
             }
         })
+})
+
+
+
+app.get('/menu',(req,res)=>{
+    var cap1 = cap1s.aggregate(
+    [{
+        $lookup:
+        {
+            from:"cap2",
+            localField:"kids",
+            foreignField:"_id",
+            as:"con"
+        }
+    }]
+    ,(err,data)=>{
+        if(!err){
+            res.json(data)
+        }else{
+            res.json("fail "+"errMsg: "+err)
+        }
+    })   
 })
