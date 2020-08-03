@@ -1,4 +1,4 @@
-var cap1s = require('../Models/cap1')
+var cap1s = require('../models/cap1')
 module.exports = (req,res)=>{
     var cap1  = new cap1s({
             name:req.params.name,
