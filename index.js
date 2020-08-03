@@ -23,10 +23,7 @@ mongoose.connect('mongodb://localhost:27017/tutorial', {useNewUrlParser: true, u
         console.log('connect to mongodb failed '+err)
     }
 });
-
-var cap1s = require('./Models/cap1')
-var cap2s = require('./Models/cap2');
-var cap1 = new cap1s()
+var cap1s = require('./models/cap1')
 // Mongoose pass TORDzu1OSZMG5EbG
 app.get("/",(req,res)=>{
     res.json('test')
@@ -36,3 +33,17 @@ app.get('/cap2/:idname/:name',controlerCap2 )
 app.get('/home',controlerHome)
 
 app.get('/create',controlerCreate)
+app.post('/create',(req,res)=>{
+    var cap1  = new cap1s({
+        name:req.body.dataCap1,
+        kid:[]
+    })
+    cap1.save((err)=>{
+        if(!err){
+            res.json("success")
+        }else{
+            res.json("fail "+err)
+        }
+    })
+    res.redirect('/home')
+})
