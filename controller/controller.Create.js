@@ -1,5 +1,5 @@
-var cap1s = require('../Models/cap1')
-var cap2s = require('../Models/cap2')
+var cap1s = require('../models/cap1')
+var cap2s = require('../models/cap2')
 
 
 
