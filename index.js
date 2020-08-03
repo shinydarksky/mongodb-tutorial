@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 3030
+const port = 3000
 app.set('views', 'Views');
 app.set('view engine', 'ejs');
 app.use(express.static('public'))
@@ -16,7 +16,7 @@ const controlerHome = require('./controller/controller.home')
 const controlerCreate = require('./controller/controller.Create')
 //Controller 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://thanhloc:TORDzu1OSZMG5EbG@cluster0.cbei7.gcp.mongodb.net/tutorial?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true},(err)=>{
+mongoose.connect('mongodb://localhost:27017/tutorial', {useNewUrlParser: true, useUnifiedTopology: true},(err)=>{
     if(!err){
         console.log('connect to mongodb successed')
     }else{
