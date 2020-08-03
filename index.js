@@ -13,7 +13,7 @@ app.use(bodyParser.json())
 const controlerCap1 = require('./controller/controller.cap1')
 const controlerCap2 = require('./controller/controller.cap2')
 const controlerHome = require('./controller/controller.home')
-const controlerCreate = require('./controller/controller.Create')
+const controlerCreate = require('./controller/controller.create')
 //Controller 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/tutorial', {useNewUrlParser: true, useUnifiedTopology: true},(err)=>{
@@ -24,8 +24,8 @@ mongoose.connect('mongodb://localhost:27017/tutorial', {useNewUrlParser: true, u
     }
 });
 
-var cap1s = require('./models/cap1')
-var cap2s = require('./models/cap2');
+var cap1s = require('./Models/cap1')
+var cap2s = require('./Models/cap2');
 var cap1 = new cap1s()
 // Mongoose pass TORDzu1OSZMG5EbG
 app.get("/",(req,res)=>{
