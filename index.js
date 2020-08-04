@@ -16,6 +16,7 @@ const controlerHome = require('./controller/controller.home')
 const controlerCreate = require('./controller/controller.create')
 //Controller 
 var mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false);
 mongoose.connect('mongodb://localhost:27017/tutorial', {useNewUrlParser: true, useUnifiedTopology: true},(err)=>{
     if(!err){
         console.log('connect to mongodb successed')
@@ -24,6 +25,7 @@ mongoose.connect('mongodb://localhost:27017/tutorial', {useNewUrlParser: true, u
     }
 });
 var cap1s = require('./models/cap1')
+var cap2s = require('./models/cap2')
 // Mongoose pass TORDzu1OSZMG5EbG
 app.get("/",(req,res)=>{
     res.json('test')
@@ -34,16 +36,35 @@ app.get('/home',controlerHome)
 
 app.get('/create',controlerCreate)
 app.post('/create',(req,res)=>{
-    var cap1  = new cap1s({
-        name:req.body.dataCap1,
-        kid:[]
-    })
-    cap1.save((err)=>{
-        if(!err){
-            res.json("success")
-        }else{
-            res.json("fail "+err)
-        }
-    })
-    res.redirect('/home')
+    if(req.body.dataCap1){
+        var cap1  = new cap1s({
+            name:req.body.dataCap1,
+            kid:[]
+        })
+        cap1.save((err)=>{
+            if(!err){
+                res.redirect('/home')
+            }else{
+                res.json("fail "+err)
+            }
+        })
+    }
+    else if (req.body.dataCap2){
+        var cap2  = new cap2s({
+            name:req.body.dataCap2,
+        })
+        cap2.save((err)=>{
+            if(!err){
+                cap1s.findOneAndUpdate({_id:req.body.idCap1},{$push:{kids:cap2._id}},(err)=>{
+                    if(!err){
+                        res.redirect('./create')
+                    }else{
+                        res.json("fail "+"errMsg:"+err)
+                    }
+                })
+            }else{
+                res.json("fail errMsg:"+err)
+            }
+        })
+    }
 })

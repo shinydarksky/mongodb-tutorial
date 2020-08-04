@@ -6,7 +6,6 @@ module.exports = (req,res)=>{
         })
         cap2.save((err)=>{
             if(!err){
-                res.json("success")
                 cap1s.findOneAndUpdate({_id:req.params.idname},{$push:{kids:cap2._id}},(err)=>{
                     if(!err){
                         res.json("success")
